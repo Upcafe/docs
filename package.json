@@ -1,0 +1,17 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Documentation for Upcafe",
+  "main": "index.js",
+  "repository": "https://github.com/UpcafeAdmin/docs.git",
+  "author": "Upcafe <admin@upcafe.nl>",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^0.15.6"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  }
+}
