@@ -1,9 +1,8 @@
 {
   "name": "docs",
   "version": "1.0.0",
-  "description": "Documentation for Upcafe",
   "main": "index.js",
-  "repository": "https://github.com/UpcafeAdmin/docs.git",
+  "repository": "https://github.com/Upcafe/docs.git",
   "author": "Upcafe <admin@upcafe.nl>",
   "license": "MIT",
   "devDependencies": {
