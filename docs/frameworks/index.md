@@ -1,6 +1,13 @@
 # Languages and frameworks
 
-## Frontend
+## Project Setup Guides
+### Strapi
+[Click here to go to the documentation](/frameworks/strapi/)
+
+### Wordpress
+[Click here to go to the documentation](/frameworks/wordpress/)
+
+
 ### Basic website
 - Vue3
 - Typescript
@@ -14,6 +21,6 @@
 
 ## CI/CD
 Hosting and deployment.
-
+ß
 ### Frontend
 - Netlify
