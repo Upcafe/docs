@@ -1,18 +1,20 @@
 module.exports = {
   lang: 'en-US',
 
-  title: 'Upcafe Docs',
-  description: 'Just playing around.',
+  title: 'Docs',
+  description: 'Upcafe Docs',
+  head: [['link', { rel: 'icon', href: `../assets/favicon.png` }]],
 
   themeConfig: {
     //logo: '/assets/logo.svg',
     nav: [
-      { text: 'Languages and Frameworks', link: '/frameworks/' },
+      { text: 'Installation', link: '/installation/' },
+      { text: 'Guides', link: '/guides/' },
       {
         text: 'Links',
         ariaLabel: 'Links',
         items: [
-          { text: 'Github', link: 'https://github.com/Upcafe/docs' },
+          { text: 'Github', link: 'https://github.com/Upcafe/docs/' },
           { text: 'Upcafe.nl', link: 'https://www.upcafe.nl' }
         ]
       }
