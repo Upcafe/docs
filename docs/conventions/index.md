@@ -25,7 +25,7 @@ feature/#1-homepage
 
 ### Commits
 - English only
-- Template: `feature/#{issue_number}-{feature_name}`
+- Template: `{type}(#{issue_number}): {description}`
 
 
 Examples
