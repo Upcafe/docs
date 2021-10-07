@@ -8,6 +8,7 @@ module.exports = {
   themeConfig: {
     //logo: '/assets/logo.svg',
     nav: [
+      { text: 'Conventions', link: '/conventions/' },
       { text: 'Installation', link: '/installation/' },
       { text: 'Guides', link: '/guides/' },
       {

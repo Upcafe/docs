@@ -130,8 +130,8 @@ Create a new file `.env.example`
 
 ```sh
 ADMIN_JWT_SECRET=
-HOST=
-PORT=
+STRAPI_HOST=
+STRAPI_PORT=
 
 CLIENT=
 DATABASE_HOST=
@@ -189,6 +189,20 @@ Copy and paste `.env.example` and rename it to
 .env
 ```
 
+Use the following values
+```sh
+ADMIN_JWT_SECRET=secret
+STRAPI_HOST=0.0.0.0
+STRAPI_PORT=1337
+
+CLIENT=mysql
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_NAME=strapi
+DATABASE_USERNAME=strapi
+DATABASE_PASSWORD=strapi
+```
+
 Now we can run Strapi.
 ```
 yarn install
@@ -201,7 +215,6 @@ yarn develop
 ## Wordpress
 This is Upcafe's documentation to create a local environment for a Wordpress website.
 This environment should <ins>not</ins> to be used in production.
-
 
 ### Tools
 - Docker
