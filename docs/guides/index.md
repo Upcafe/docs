@@ -37,9 +37,10 @@ yarn add vue-router@4
 # Add react-snap for prerendering HTML.
 yarn add --dev react-snap
 
-# Add apollo
-# For the most recent documentation go to https://apollo.vuejs.org/guide/installation.html
-yarn add vue-apollo graphql apollo-boost
+# Add apollo 4
+# For the most recent documentation go to https://v4.apollo.vuejs.org/migration/#installation
+yarn add --save @vue/apollo-option @apollo/client
+yarn add @vue/apollo-composable
 ```
 
 #### Add postbuild
@@ -164,6 +165,142 @@ Create a `.env.example` file and a `.env` file with the following content
 ```
 NODE_ENV=development
 VITE_APP_STRAPI_API=http://localhost:1337/graphql
+```
+
+### Router setup
+Create the folder `src/views/` and create the views:
+- Delete `views/helloworld.vue`
+- Create a folder `views/home/` and create the file `Home.vue` in there
+- Create `views/NotFound.vue`
+
+```vue
+<!-- /views/home/Home.vue -->
+<template>
+  <main aria-labelledby="home-title">
+    <section>
+      <h1 id="home-title" class="title">Home</h1>
+      <img src="@/assets/logo.svg" />
+    </section>
+  </main>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "Home",
+  setup: () => {
+  }
+});
+</script>
+
+<style lang="scss" scoped>
+</style>
+```
+
+```vue
+<!-- /views/NotFound.vue -->
+<template>
+  <main aria-labelledby="notfound-title">
+    <section>
+      <h1 id="notfound-title" class="title">404</h1>
+    </section>
+  </main>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "NotFound",
+  setup: () => {
+  }
+});
+</script>
+
+<style lang="scss" scoped>
+</style>
+```
+
+Create the folder `src/router` with a file `index.ts`
+```
+// src/router/index.ts
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import NotFound from '@/views/NotFound.vue';
+import Home from '@/views/home/home.vue';
+
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/",
+    name: "home",
+    component: Home
+  },
+  {
+    path: '/not-found',
+    name: 'Not found',
+    //   // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '@/views/NotFound.vue')
+  },
+  { path: '/:pathMatch(.*)', name: 'bad-not-found', component: NotFound },
+]
+
+const router = createRouter({
+  history: createWebHistory(""),
+  routes,
+  scrollBehavior() { //to, from, savedPosition) {
+    // always scroll to top
+    return { top: 0 }
+  },
+});
+
+export default router;
+```
+
+### Apollo setup
+Create the folder `src/apollo` with a file `index.ts`
+```ts
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
+
+const uri = import.meta.env.VITE_APP_STRAPI_API ? import.meta.env.VITE_APP_STRAPI_API.toString() : "http://localhost:1337";
+// HTTP connection to the API
+const httpLink = createHttpLink({
+  // You should use an absolute URL here
+  uri: uri
+})
+
+// Cache implementation
+const cache = new InMemoryCache()
+
+// Create the apollo client
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache,
+})
+
+export default apolloClient;
+```
+
+
+### Configure main.ts
+```ts
+// src/main.ts
+import { createApp, provide, h } from 'vue'
+import App from './App.vue'
+import router from './router';
+import { DefaultApolloClient } from '@vue/apollo-composable';
+import ApolloClient from "./apollo";
+import "@/assets/scss/main.scss";
+
+const app = createApp({
+  setup () {
+    provide(DefaultApolloClient, ApolloClient);   
+  },
+
+  render: () => h(App),
+})
+
+app.use(router);
+app.mount('#app');
 ```
 
 ## Strapi
