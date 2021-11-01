@@ -15,8 +15,19 @@ Go to the directory where you want to create to repository and
 run the following commands.
 
 ```sh
-yarn create @vitejs/app
+yarn create vite
+```
 
+Here you should use the following values:
+```
+✔ Project name: … app
+✔ Select a framework: › vue
+✔ Select a variant: › vue-ts
+```
+
+Now the project will be created in a folder called `app`.
+Put the contents of this folder in the git repository root and remove the folder `app`.
+```
 # Add store
 yarn add vuex@4
 
@@ -25,6 +36,10 @@ yarn add vue-router@4
 
 # Add react-snap for prerendering HTML.
 yarn add --dev react-snap
+
+# Add apollo
+# For the most recent documentation go to https://apollo.vuejs.org/guide/installation.html
+yarn add vue-apollo graphql apollo-boost
 ```
 
 #### Add postbuild
@@ -43,23 +58,16 @@ yarn add --dev react-snap
 }
 ```
 
-#### Resolve @ as alias to src
-
-```ts
+### Resolve @ as alias to src
+```
 // vite.config.ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import path from 'path'
-
-export default defineConfig({
-  plugins: [vue()],
-  resolve: {
+ resolve: {
     alias: {
-      '@': path.resolve(__dirname, '/src'),
+      '@': process.cwd() + '/src',
     },
   }
-})
 ```
+
 
 #### Set volar
 Install Volar from VSCode Extensions and 
@@ -73,6 +81,90 @@ To prevent accidentally leaking env variables to the client, only variables pref
 <br/>
 
 [docs](https://vitejs.dev/guide/env-and-mode.html#env-files)
+
+### Folder Creation
+
+#### Create in src/assets
+- Copy the `scss` from another project and paste in here.
+- Create subfolder `img` and paste the `placeholder.jpg` in here from another project.
+
+#### To use the Sass do the following
+```sh
+yarn add -D sass
+```
+
+```ts
+// main.ts
+import "@/assets/scss/main.scss";
+```
+
+```scss
+// Only for when you want to use sass variables like color in .vue
+// For just using css you dont need to use this.
+@import "@/assets/scss/abstracts/_colors.scss";
+```
+
+### Create folder src/types
+- Create subfolder `enums`
+- Create subfolder `single-types`
+
+### Create in /src/components
+- Create subfolder `common`
+- Create subfolder `home`
+- Create subfolder `single`
+- Copy the `components/svg` from another project and paste in here.
+
+### Get all assets
+Make sure you got a perfectly square `logo.png` and use the [favicon-generator](https://realfavicongenerator.net/) to generate the files.
+Copy all the generated files and put them into `./public`.
+
+#### Fonts
+
+For webfonts use `fonts.google`.
+```
+// scss/assets/base/_font-face.scss
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+```
+
+For local fonts use to generate the css font faces [https://transfonter.org](https://transfonter.org/).
+```
+// scss/assets/base/_font-face.scss
+// https://transfonter.org/
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/Montserrat-BlackItalic.woff2') format('woff2'),
+      url('/fonts/montserrat/Montserrat-BlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/Montserrat-Black.woff2') format('woff2'),
+      url('/fonts/montserrat/Montserrat-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/Montserrat-ExtraLightItalic.woff2') format('woff2'),
+      url('/fonts/montserrat/Montserrat-ExtraLightItalic.woff') format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+```
+
+### Environment
+Create a `.env.example` file and a `.env` file with the following content
+```
+NODE_ENV=development
+VITE_APP_STRAPI_API=http://localhost:1337/graphql
+```
 
 ## Strapi
 Guide for setting up a Strapi backend.
