@@ -60,6 +60,7 @@ yarn add @vue/apollo-composable
 ```
 
 ### Resolve @ as alias to src
+Actual resolver
 ```
 // vite.config.ts
  resolve: {
@@ -68,7 +69,16 @@ yarn add @vue/apollo-composable
     },
   }
 ```
-
+Extra resolver for vscode linter
+```
+// tsconfig.json
+"baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+```
 
 #### Set volar
 Install Volar from VSCode Extensions and 
