@@ -411,7 +411,7 @@ ALTER USER  'strapi'@'%' IDENTIFIED WITH mysql_native_password BY 'strapi';
 
 Allright, now run `exit` twice to return to your terminal.
 
-#### Run the app
+#### Connect strapi to the database
 Next, we should configure Strapi to use the development database.
 Copy and paste `.env.example` and rename it to 
 ```
@@ -432,6 +432,54 @@ DATABASE_USERNAME=strapi
 DATABASE_PASSWORD=strapi
 ```
 
+Go to config/database.js
+```js
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: process.env.CLIENT,
+        host: env('DATABASE_HOST', process.env.DATABASE_HOST),
+        port: env.int('DATABASE_PORT', process.env.DATABASE_PORT ),
+        database: env('DATABASE_NAME', process.env.DATABASE_NAME),
+        username: env('DATABASE_USERNAME', process.env.DATABASE_USERNAME),
+        password: env('DATABASE_PASSWORD', process.env.PASSWORD),
+      },
+      options: {},
+    },
+  },
+});
+```
+
+then go to config/server.js
+```js
+module.exports = ({ env }) => ({
+  host: process.env.STRAPI_HOST,
+  port: process.env.STRAPI_PORT,
+  admin: {
+    auth: {
+      secret: process.env.ADMIN_JWT_SECRET,
+    },
+  }
+});
+```
+
+then in config create cors.js
+```js
+console.log(process.env.ALLOWED_HOSTS)
+
+module.exports = {
+  settings: {
+    cors: {
+      origin: (process.env.ALLOWED_HOSTS) ? (process.env.ALLOWED_HOSTS).split(' ') : ['*'],
+    },
+  },
+};
+```
+
+#### Run strapi
 Now we can run Strapi.
 ```
 yarn install
