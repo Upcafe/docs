@@ -578,3 +578,13 @@ Allright, now run `exit` twice to return to your terminal.
 
 #### Step 3
 Now it's finally time to config our Wordpress server with our database. 
+
+
+
+## Import / Export
+Add this line in the `strapi.sql`.
+```sql
+SET SQL_REQUIRE_PRIMARY_KEY = false;
+```
+
+
