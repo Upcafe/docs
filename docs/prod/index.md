@@ -13,8 +13,8 @@ Create a user: `strapi` and use `Legacy – MySQL 5.x` password encryption.
 
 ### Check with PHPMyAdmin
 ```sh
-HOST=app-marcel-nijland-db-mysql-do-user-9742335-0.b.db.ondigitalocean.com
-PORT=25060
+HOST=host
+PORT=port
 
 docker run \
   --name myadmin \
@@ -31,16 +31,23 @@ user: doadmin
 password: yourpass
 ```
 
-### Run in strapi db
-```sql
-SET SQL_REQUIRE_PRIMARY_KEY = false;
-SET @ORIG_SQL_REQUIRE_PRIMARY_KEY = @@SQL_REQUIRE_PRIMARY_KEY;
-SET GLOBAL sql_require_primary_key = 0;
+## Test docker image
 
-SELECT /*+ SET_VAR(sql_require_primary_key = 0)
-
+## Delete potential previous image & container
+```
+docker rm -f app-strapi-c && docker rmi -f app-strapi
 ```
 
+## Test prod
+Create `.env.prod` and use the production database settings.
+Make sure your ip is whitelisted.
 
-## Test docker image
-asdfasd
+
+## Builds
+```
+docker build -t app-strapi .
+```
+
+```
+docker run -p 8080:8080 --name app-strapi-c --env-file ./.env.prod app-strapi
+```
