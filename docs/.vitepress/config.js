@@ -11,6 +11,7 @@ module.exports = {
       { text: 'Conventions', link: '/conventions/' },
       { text: 'Installation', link: '/installation/' },
       { text: 'Guides', link: '/guides/' },
+      { text: 'Prod', link: '/prod/' },
       {
         text: 'Links',
         ariaLabel: 'Links',
